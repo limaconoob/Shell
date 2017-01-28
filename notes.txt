@@ -1,0 +1,3 @@
+Si un binaire est présent dans deux dossieers différents, on prend uniquement le premier!
+Executer le hashage pendant la récupération du PATH!
+ne pas réexécuter le hashage de tous les binaires à chaque changement du PATH, seulement faire une diff entre les PATH (new-old)
