@@ -1,0 +1,6 @@
+- Réception de la ligne de commande
+- Gestion des logs
+- Hasheur de binaires
+- Parse de la ligne
+- Création d'un sous processus
+
