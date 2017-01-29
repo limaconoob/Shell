@@ -28,7 +28,7 @@
   } t_hash;
 
   typedef struct s_shell
-  { int *contenu;
+  { unsigned int *contenu;
     int len;
     the_time heure;
     int status_final;
@@ -56,5 +56,6 @@
   t_env *env_extract(char *env);
   char *find(t_hash **bin, char *exec);
   void openner(char *coucou, char *file, char *concat);
+  void readder(t_term *term);
 
 #endif

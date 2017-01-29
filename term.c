@@ -8,7 +8,6 @@ typedef struct termios terms;
 
 void TERM(t_term *term, char **envp)
 { WINSZ((*term).winsz);
-  BZE((*term).cursor, sizeof(unsigned short) * 2);
 
   // TEMPORAIRE
   *((*term).logs) = NULL;
