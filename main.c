@@ -15,7 +15,7 @@ void readder(t_term *term)
 
 void hash_debug(t_hash *bonjour)
 { if (bonjour)
-  { printf("HASHER::(%s, %s, 0x%x)\n", (*bonjour).exec, (*bonjour).bin, (*bonjour).hash);
+  { printf("HASHER::(%s, %s, 0x%x)\n", (*bonjour).exec, (*bonjour).path, (*bonjour).hash);
     hash_debug((*bonjour).lourd); 
     hash_debug((*bonjour).leger); }}
 
@@ -32,6 +32,7 @@ int main(int argc, char **argv, char **envp)
   printf("\n--------------------------------------------\n\n");
 
   printf("WINSZ::(%u, %u)\n", ((*term).winsz)[0], ((*term).winsz)[1]);
+  printf("TOP_HASH::(%s, %s, 0x%x)\n", (*(*((*term).bin))).exec, (*(*((*term).bin))).path, (*(*((*term).bin))).hash);
 
   printf("\n--------------------------------------------\n\n");
 

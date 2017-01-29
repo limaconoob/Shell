@@ -8,6 +8,8 @@
   int LEN(char *str);
   void BZE(void *ptr, int size);
   int GNL(int fd, char **line);
+  char *LCHR(char *str,  char find);
+  int CMP(void *ptr1, void *ptr2);
   int NCMP(void *ptr1, void *ptr2, int size);
   char *SUB(char *str, int start, int len);
   void NCPY(void *ptr1, void *ptr2, int size);

@@ -1,3 +1,4 @@
+- Gestion des builtins
 - Réception de la ligne de commande
 - Gestion des logs
 - Hasheur de binaires

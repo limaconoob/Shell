@@ -16,8 +16,7 @@ void TERM(t_term *term, char **envp)
 
   *((*term).bin) = NULL;
   *((*term).env) = NULL;
-  HASH((*term).bin);
-  ENV((*term).env, envp); }
+  ENV(term, envp); }
 
 void TEND(terms *term)
 { static terms stock[1];

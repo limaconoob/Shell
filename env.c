@@ -41,14 +41,18 @@ t_env *env_extract(char *env)
   { /* absence de phrase */ }
   return ((void*)0); }
 
-void ENV(t_env **maitre, char **envp)
+void ENV(t_term *term, char **envp)
 { t_env *tmp;
   if (envp)
   { while (*envp)
-    { if (*maitre)
+    { if (*((*term).env))
       { (*tmp).next = env_extract(*envp);
-        tmp = (*tmp).next; }
+        if ((*tmp).next)
+        { tmp = (*tmp).next; }}
       else
       { tmp = env_extract(*envp);
-        *maitre = tmp; }
+        *((*term).env) = tmp; }
+      if (tmp && !NCMP((*tmp).nom, "PATH", LEN((*tmp).nom)))
+      { (*term).paths = (*tmp).valeur;
+        HASH((*term).bin, (*tmp).valeur); }
       envp += 1; }}}

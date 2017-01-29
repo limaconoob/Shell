@@ -17,6 +17,16 @@ int LEN(char *str)
   { i += 1; }
   return (i); }
 
+char *LCHR(char *str,  char find)
+{ if (str)
+  { int i = LEN(str);
+    while (i + 1)
+    { if (str[i] == find)
+      { i += 1;
+        return (&(str[i])); }
+      i -= 1; }}
+  return ((void*)0); }
+
 char *DUP(char *str)
 { int i = 0;
   char *ret;
@@ -48,6 +58,12 @@ void BZE(void *ptr, int size)
 { while (size)
   { ((unsigned char *)ptr)[size - 1] = 0;
     size -= 1; }}
+
+int CMP(void *ptr1, void *ptr2)
+{ int i = 0;
+  while (((unsigned char*)ptr1)[i] && ((unsigned char*)ptr2)[i] && ((unsigned char*)ptr1)[i] == ((unsigned char*)ptr2)[i])
+  { i += 1; }
+  return (((unsigned char*)ptr1)[i] - ((unsigned char*)ptr2)[i]); }
 
 int NCMP(void *ptr1, void *ptr2, int size)
 { if (size > 0)
