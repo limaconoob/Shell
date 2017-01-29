@@ -27,11 +27,11 @@ static void LINE(t_shell **line)
 
 static void push_char(t_shell **line, unsigned int m)
 { (**line).contenu[(**line).cursor] = m;
-printf("CONTENU::(0x%x, %u) INDEX::%d\n", m, m, (**line).cursor);
+  write(0, (char*)&m, 4);
   (**line).cursor += 1; }
 
 void readder(t_term *term)
-{ char line[1024];
+{ unsigned char line[1024];
   BZE(line, 1024);
   unsigned short attr[5];
   unsigned int m;
@@ -62,16 +62,21 @@ void readder(t_term *term)
           while (i < ret && (line[i] < 'A' || (line[i] > 'Z' && line[i] < 'a') || line[i] > 'z'))
           { i += 1; }}}
       else if ((line[i] & 0b11111000) == 0b11110000)
-      { m = ((line[i] & 0x07) << 18) + ((line[i + 1] & 0x3F) << 12) + ((line[i + 2] & 0x3F) << 6) | (line[i + 3] & 0x3F);
+      { m |= line[i];
+        m |= (line[i + 1] << 8);
+        m |= (line[i + 2] << 16);
+        m |= (line[i + 3] << 24);
         push_char((*term).logs, m);
         i += 4; }
       else if ((line[i] & 0b11110000) == 0b11100000)
-      { m = ((line[i] & 0x0F) << 12) + ((line[i + 1] & 0x3F) << 6) + (line[i + 2] & 0x3F);
+      { m |= line[i];
+        m |= (line[i + 1] << 8);
+        m |= (line[i + 2] << 16);
         push_char((*term).logs, m);
         i += 3; }
       else if ((line[i] & 0b11100000) == 0b11000000)
-      { m |= ((line[i] & 0x1F) << 6);
-        m |= (line[i + 1] & 0x3F);
+      { m |= line[i];
+        m |= (line[i + 1] << 8);
         push_char((*term).logs, m);
         i += 2; }
       else
@@ -83,27 +88,9 @@ void readder(t_term *term)
   int k = 0;
   unsigned char tmp[4];
   BZE(tmp, 4);
-  write(0, "LINE::", 6);
-  tmp[0] = 0x00e2;
-  tmp[1] = 0x0082;
-  tmp[2] = 0x00ac;
-  write(1, tmp, 3);
-  write(0, "\n", 1);
-  BZE(tmp, 4);
-  tmp[0] = 0xffe282ac;
-  write(1, tmp, 3);
-  write(0, "\n", 1);
-  BZE(tmp, 4);
+  write(0, "\nLINE::", 7);
   while ((*(*((*term).logs))).contenu[k])
-  { tmp[0] = (unsigned char)((*(*((*term).logs))).contenu[k] & 0xFF);
-    tmp[1] = (unsigned char)(((*(*((*term).logs))).contenu[k] & 0xFF00) >> 8);
-    tmp[2] = (unsigned char)(((*(*((*term).logs))).contenu[k] & 0xFF0000) >> 16);
-    tmp[3] = (unsigned char)(((*(*((*term).logs))).contenu[k] & 0xFF000000) >> 24);
-    write(0, tmp, LEN(tmp));
-    write(0, tmp, 4);
-printf("TMP! ::%s | LEN::%d\n0::%d | 1::%d | 2::%d | 3::%d\n", tmp, LEN(tmp), tmp[0], tmp[1], tmp[2], tmp[3]);
-    printf("THE::0x%x\n", (*(*((*term).logs))).contenu[k]);
-    BZE(tmp, 4);
+  { write(0, (char*)&((*(*((*term).logs))).contenu[k]), 4);
     k += 1; }
   write(0, "\n", 1);
 // DEBUG
