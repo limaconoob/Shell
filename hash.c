@@ -74,6 +74,25 @@ void openner(char *coucou, char *file, char *concat)
       file += 1;
       i += 1; }}}
 
+char *find(t_hash **bin, char *exec)
+{ t_hash *tmp = *bin;
+  int cmp;
+  int hash = hasher(exec);
+  while (tmp)
+  { if (hash > (*tmp).hash)
+    { tmp = (*tmp).lourd; }
+    else if (hash < (*tmp).hash)
+    { tmp = (*tmp).leger; }
+    else if ((cmp = CMP(exec, (*tmp).exec)))
+    { if (cmp > 0)
+      { tmp = (*tmp).lourd; }
+      else
+      { tmp = (*tmp).leger; }}
+    else
+    { printf("VIM_PATH::%s\n", (*tmp).path);
+      return ((*tmp).path); }}
+  return ((void*)0); }
+
 static void dir_readder(t_hash **bin, char *path)
 { DIR *dir = opendir(path);
   char file[4096];
@@ -86,10 +105,8 @@ static void dir_readder(t_hash **bin, char *path)
       if (CMP((*dp).d_name, ".") && CMP((*dp).d_name, ".."))
       { openner(path, (*dp).d_name, file);
         if (!lstat(file, &sb) && (sb.st_mode & 0xF000) == S_IFREG && (sb.st_mode & S_IXUSR))
-        { remplisshash(bin, file, (*dp).d_name); }}
-    }
-    (void)closedir(dir); }
-}
+        { remplisshash(bin, file, (*dp).d_name); }}}
+    (void)closedir(dir); }}
 
 void HASH(t_hash **bin, char *paths)
 { char buf[4096];

@@ -39,6 +39,10 @@ int main(int argc, char **argv, char **envp)
   hash_debug(*((*term).bin));
 
   printf("\n--------------------------------------------\n\n");
+
+  find((*term).bin, "vim");
+
+  printf("\n--------------------------------------------\n\n");
 //DEBUG
 
   TINI();
