@@ -28,16 +28,17 @@
   } t_hash;
 
   typedef struct s_shell
-  { char *contenu;
+  { int *contenu;
+    int len;
     the_time heure;
     int status_final;
+    unsigned int cursor;
     struct s_shell *prev;
     struct s_shell *next;
   } t_shell;
 
   typedef struct s_term
   { unsigned short winsz[2];
-    unsigned short cursor[2];
     t_shell *logs[1];
     t_hash *bin[1];
     t_env *env[1];
