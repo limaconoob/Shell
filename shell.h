@@ -29,10 +29,11 @@
 
   typedef struct s_shell
   { unsigned int *contenu;
-    int len;
     the_time heure;
+    int len;
     int status_final;
     unsigned int cursor;
+    unsigned char fall;
     struct s_shell *prev;
     struct s_shell *next;
   } t_shell;
