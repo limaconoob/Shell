@@ -61,17 +61,17 @@ void openner(char *coucou, char *file, char *concat)
 { int i = 0;
   BZE(concat, 4096);
   if (coucou)
-  { while (i < 4096 && *coucou)
-    { concat[i] = *coucou;
-      coucou += 1;
+  { while (i < 4096 && *(coucou + i))
+    { concat[i] = *(coucou + i);
       i += 1; }
     if (i < 4096)
     { concat[i] = '/';
       i += 1; }}
   if (file)
-  { while (i < 4096 && *file)
-    { concat[i] = *file;
-      file += 1;
+  { concat = &(concat[i]);
+    i = 0;
+    while (i < 4096 && *(file + i))
+    { concat[i] = *(file + i);
       i += 1; }}}
 
 char *find(t_hash **bin, char *exec)
@@ -89,7 +89,7 @@ char *find(t_hash **bin, char *exec)
       else
       { tmp = (*tmp).leger; }}
     else
-    { printf("VIM_PATH::%s\n", (*tmp).path);
+    { printf("PATH(%s)::%s\n", exec, (*tmp).path);
       return ((*tmp).path); }}
   return ((void*)0); }
 
